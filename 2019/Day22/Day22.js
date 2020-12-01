@@ -38,7 +38,7 @@ const parseInstr = instruction => {
 
 const shuffleDeck = async () => {
   let input = await (await fs.readFile(path.join(__dirname, 'input.txt'), 'utf8')).split('\n');
-  let deck = Array.from(Array(10007).keys());
+  let deck = Array.from(Array(119315717514047).keys());
   for (let i = 0; i < input.length; i++) {
     let instruction = input[i];
       if (instruction.includes('deal with increment')) {
