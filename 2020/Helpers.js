@@ -8,6 +8,24 @@ async function fetchInput(dayStr) {
   return input;
 }
 
+function splitArray(arr, char) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    newArr.push(arr[i].split(char));
+  }
+  return newArr;
+}
+
+function arrToString(arr) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    newArr.push(arr[i].join(''));
+  }
+  return newArr;
+}
+
 module.exports = {
-  fetchInput
+  fetchInput,
+  splitArray,
+  arrToString
 }
