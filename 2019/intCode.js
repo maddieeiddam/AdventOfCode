@@ -44,6 +44,8 @@ class Computer {
         this.memory[this.memory[param3]] = this.memory[this.memory[param1]] * this.memory[this.memory[param2]];
         this.pointer += 4;
         break;
+      case 3:
+
       default:
         console.log('unknown instruction opcode');
     }
