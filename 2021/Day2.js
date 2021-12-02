@@ -3,30 +3,35 @@ const helpers = require('./../helpers');
 const testInput = ['forward 5', 'down 5', 'forward 8', 'up 3', 'down 8', 'forward 2']
 const input = helpers.fetchInput('2021', 'Day2', '\n')
 
-const part1 = arr => {
-  const coords = [0, 0]
+const navigate = (arr, part) => {
   arr = helpers.splitArray(arr, ' ')
+  const coords = {
+    x: 0,
+    y: 0,
+    aim: 0
+  }
   for (let i = 0; i < arr.length; i++) {
     let units = parseInt(arr[i][1], 10);
-    switch (arr[i][0]) {
-      case 'forward':
-        coords[0] += units;
-        break;
-      case 'down':
-        coords[1] += units;
-        break;
-      case 'up':
-        coords[1] -= units;
-        break;
-      default:
-        console.log('no match!')
+    if (part === 1) {
+      if (arr[i][0] === 'forward') {
+        coords.x += units;
+      } else if (arr[i][0] === 'down') {
+        coords.y += units
+      } else {
+        coords.y -= units
+      }
+    } else if (part === 2) {
+        if (arr[i][0] === 'forward') {
+          coords.x += units;
+          coords.y += coords.aim * units
+        } else if (arr[i][0] === 'down') {
+          coords.aim += units
+        } else {
+          coords.aim -= units
+        }
     }
   }
-  console.log('solution:', coords[0] * coords[1])
+  console.log('solution:', coords.x * coords.y)
 }
 
-const part2 = arr => {
-
-}
-
-part1(input)
+navigate(input, 2)
