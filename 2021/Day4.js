@@ -41,17 +41,20 @@ const boardSum = board => {
   return sum;
 }
 
-const part1 = arr => {
+const squidBingo = arr => {
   let {chosenNums, boards} = setupBoards(arr)
   for (let i = 0; i < chosenNums.length; i++) {
     for (let j = 0; j < boards.length; j++) {             // each board
-      for (let k = 0; k < boards[j].length; k++) {        // each row
-        for (let m = 0; m < boards[j][k].length; m++) {   // each element
-          if (boards[j][k][m] === chosenNums[i]) {
-            boards[j][k][m]  = 'X';
-            if (winningRow(boards[j][k]) || winningCol(boards[j], m)) {
-              console.log('part 1 solution:', chosenNums[i] * boardSum(boards[j]));
-              return boards[j];
+      if (boards[j].length > 0) {
+        for (let k = 0; k < boards[j].length; k++) {        // each row
+          for (let m = 0; m < boards[j][k].length; m++) {   // each element
+            if (boards[j][k][m] === chosenNums[i]) {
+              boards[j][k][m]  = 'X';
+              if (winningRow(boards[j][k]) || winningCol(boards[j], m)) {
+                console.log('part 1 solution:', chosenNums[i] * boardSum(boards[j]));
+                boards[j] = [];
+                break;
+              }
             }
           }
         }
@@ -60,4 +63,4 @@ const part1 = arr => {
   }
 }
 
-part1(input)
+squidBingo(input)
