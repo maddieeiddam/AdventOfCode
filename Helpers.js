@@ -31,8 +31,30 @@ function arrToString(arr) {
   return newArr;
 }
 
+// returns the size of an input array as [width, height]
+function getGridSize(arr) {
+  let size = [
+		arr[0].length,
+		arr.length,
+	];
+  return size
+}
+
+//
+function getAdjacent(arr, x, y) {
+  const [X, Y] = getGridSize(arr);
+  return [
+		[x + 1, y],
+		[x, y + 1],
+		[x - 1, y],
+		[x, y - 1],
+	]
+	.filter(([x, y]) => x >= 0 && x < X && y >= 0 && y < Y)
+}
+
 module.exports = {
   fetchInput,
   splitArray,
-  arrToString
+  arrToString,
+  getAdjacent
 }
