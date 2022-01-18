@@ -40,16 +40,18 @@ function getGridSize(arr) {
   return size
 }
 
-//
-function getAdjacent(arr, x, y) {
-  const [X, Y] = getGridSize(arr);
-  return [
+function getAdjacent(arr, x, y, diag = false) {
+  const [W, H] = getGridSize(arr);
+  let adj = [
 		[x + 1, y],
 		[x, y + 1],
 		[x - 1, y],
 		[x, y - 1],
 	]
-	.filter(([x, y]) => x >= 0 && x < X && y >= 0 && y < Y)
+  if (diag) {
+    adj.push([x - 1, y + 1], [x - 1, y - 1], [x + 1, y + 1], [x + 1, y - 1])
+  }
+	return adj.filter(([x, y]) => x >= 0 && x < H && y >= 0 && y < W)
 }
 
 module.exports = {
