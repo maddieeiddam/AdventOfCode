@@ -32,16 +32,17 @@ function arrToString(arr) {
 }
 
 // returns the size of an input array as [width, height]
-function getGridSize(arr) {
+function getGridSize(arr, repeat = 1) {
   let size = [
-		arr[0].length,
-		arr.length,
+		arr[0].length * repeat,
+		arr.length * repeat,
 	];
   return size
 }
 
-function getAdjacent(arr, x, y, diag = false) {
-  const [W, H] = getGridSize(arr);
+// returns an array of all adjacent coordinates of a specific x,y in a 2D array
+function getAdjacent(arr, repeat, x, y, diag = false) {
+  const [W, H] = getGridSize(arr, repeat);
   let adj = [
 		[x + 1, y],
 		[x, y + 1],
@@ -54,9 +55,16 @@ function getAdjacent(arr, x, y, diag = false) {
 	return adj.filter(([x, y]) => x >= 0 && x < H && y >= 0 && y < W)
 }
 
+// returns an array of ints [x, y] given the string 'x,y'
+function parseCoord(coord) {
+  return coord.split(',').map(n => parseInt(n, 10));
+}
+
 module.exports = {
   fetchInput,
   splitArray,
   arrToString,
-  getAdjacent
+  getGridSize,
+  getAdjacent,
+  parseCoord
 }
