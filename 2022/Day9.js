@@ -45,7 +45,6 @@ const stepTail = (idx, head, tail) => {
 const mapTail = input => {
     let hCoord = {x: 0, y: 0}
     let tails = Array.from(Array(9)).map(e => ({x: 0, y: 0}))
-    console.log('tails', tails)
     for (let i = 0; i < input.length; i++) {
         let distance = Number(input[i][1])
         while (distance > 0) {
