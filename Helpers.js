@@ -57,6 +57,13 @@ function getAdjacent(arr, repeat, x, y, diag = false) {
 	return adj.filter(([x, y]) => x >= 0 && x < H && y >= 0 && y < W)
 }
 
+// given coords of 2 points, returns true if the points are adjacent, diagonal, overlapping
+function isAdjacent(x1, y1, x2, y2) {
+  const dx = Math.abs(x1 - x2)
+  const dy = Math.abs(y1 - y2)
+  return (dx + dy === 1 || dx + dy === 0 || (dx === 1 && dy === 1))
+}
+
 // returns an array of ints [x, y] given the string 'x,y'
 function parseCoord(coord) {
   return coord.split(',').map(n => parseInt(n, 10));
@@ -83,6 +90,7 @@ module.exports = {
   convertWithDict,
   fetchInput,
   getAdjacent,
+  isAdjacent,
   getGridSize,
   parseCoord,
   splitArray,
