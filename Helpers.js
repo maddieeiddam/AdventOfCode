@@ -58,10 +58,12 @@ function getAdjacent(arr, repeat, x, y, diag = false) {
 }
 
 // given coords of 2 points, returns true if the points are adjacent, diagonal, overlapping
-function isAdjacent(x1, y1, x2, y2) {
+function isAdjacent(x1, y1, x2, y2, diagonal=true) {
   const dx = Math.abs(x1 - x2)
   const dy = Math.abs(y1 - y2)
-  return (dx + dy === 1 || dx + dy === 0 || (dx === 1 && dy === 1))
+  if (diagonal) {
+    return (dx + dy === 1 || dx + dy === 0 || (dx === 1 && dy === 1))
+  } else return (dx + dy === 1 || dx + dy === 0)
 }
 
 // returns an array of ints [x, y] given the string 'x,y'
@@ -79,6 +81,48 @@ function convertStringWithDict(str, dict) {
   return str.split('').map(char => convertWithDict(char, dict)).join('')
 }
 
+// given 2 horizontal/vertical points, returns an array of all points between (inclusive)
+function pointsBetween(x1, y1, x2, y2) {
+  let output = []
+  if (x1 === x2) {
+    let y = Math.max(y1, y2)
+    while (y >= Math.min(y1, y2)) {
+      output.push([x1, y])
+      y--
+    }
+    return output
+  } else if (y1 === y2) {
+    let x = Math.max(x1, x2)
+    while (x >= Math.min(x1, x2)) {
+      output.push([x, y1])
+      x--
+    }
+    return output
+  } else {
+    console.log(`error: ${x1},${y1} is not horizontal or vertical to ${x2},${y2}`)
+  }
+}
+
+// given a starting point and target point in the form [x, y]
+// and a callback to determine valid paths, returns the shortest path between
+function breadthFirstSearch(input, start, target, nextFn) {
+  let queue = [[start, 0]]
+  let visited = new Set()
+  while (queue.length) {
+      const [current, steps] = queue.shift()
+      if (visited.has(current.toString())) {
+          continue
+      }
+      visited.add(current.toString())
+      console.log('current', current, input[current[0]][current[1]])
+      if (current[0] === target[0] && current[1] === target[1]) {
+          return steps
+      }
+      let moves = nextFn(input, current)
+      queue = queue.concat(moves.map(point => [point, steps + 1]))
+  }
+}
+
 function test(testName, input, expected) {
   let str = dequal(input, expected) ? `passed: ${testName}` : `${testName} failed.  Expected ${expected}, received ${input}`
   console.log(str)
@@ -86,13 +130,15 @@ function test(testName, input, expected) {
 
 module.exports = {
   arrToString,
+  breadthFirstSearch,
   convertStringWithDict,
   convertWithDict,
   fetchInput,
   getAdjacent,
-  isAdjacent,
   getGridSize,
+  isAdjacent,
   parseCoord,
+  pointsBetween,
   splitArray,
   test
 }
